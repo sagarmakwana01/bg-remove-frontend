@@ -1,0 +1,47 @@
+/* Hide default positioning */
+.slick-prev, .slick-next {
+    display: none !important;
+  }
+  
+  .slider-container {
+    position: relative;
+  }
+  
+  /* Container for both arrows */
+  .arrow-container {
+    display: flex;
+    justify-content: center; /* center them horizontally */
+    gap: 30px; /* space between arrows */
+    margin-top: 50px; /* distance from slider */
+  }
+  
+  /* Styling for each button */
+  .custom-arrow {
+    background: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+
+  }
+  .center-slide {
+    padding: 0px 20px 20px 0px;
+    border-radius: 6px;
+    background: #FFC107;
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+  
+  .slick-slider .slick-track, .slick-slider .slick-list{
+    display: flex;
+    gap: 20px;
+  }
+  
+  .custom-arrow:hover {
+    background-color: #eee;
+  }
+  

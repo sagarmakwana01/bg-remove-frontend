@@ -1,0 +1,33 @@
+.why-choose-tab-a {
+    display: inline-block;
+    font-family: Open Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21.79px;
+    letter-spacing: 0px;
+    padding: 11px 21px;
+    color: #4A4A4A;
+    border: 2px solid transparent;
+  }
+  .why-choose-tab-menu ul {
+    display: flex;
+    justify-content: center;
+    background: var(--Background-Color);
+    width: fit-content;
+    margin: auto;
+    border-radius: 6px;
+}
+  .why-choose-active-a {
+    border: 2px solid #F2F2F2;
+    background-color: #A7D600;
+    border-radius: 6px;
+  }
+  
+  .why-choose-tab {
+    display: none;
+  }
+  
+  .why-choose-tab-active {
+    display: block;
+  }
+  
