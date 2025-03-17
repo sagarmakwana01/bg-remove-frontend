@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './WhyChoose.css';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const WhyChooseUs = () => {
   const [tabs, setTabs] = useState([]); // Holds the fetched tab data
   const [activeTab, setActiveTab] = useState(''); // Holds the current active tab name
@@ -11,7 +11,7 @@ const WhyChooseUs = () => {
   useEffect(() => {
     const fetchTabs = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/get-why-choose-first-api');
+        const res = await axios.get(`${apiUrl}/get-why-choose-first-api`);
         if (res.data.success && Array.isArray(res.data.data)) {
           setTabs(res.data.data);
           if (res.data.data.length > 0) {
@@ -77,7 +77,7 @@ const WhyChooseUs = () => {
                   {tab.tabImages.map((img, imgIndex) => (
                     <img
                       key={imgIndex}
-                      src={`http://localhost:3000/why-choose-us/${img}`}
+                      src={`${apiUrl}/why-choose-us/${img}`}
                       alt={`Tab ${tab.tabName} Image ${imgIndex + 1}`}
                     />
                   ))}

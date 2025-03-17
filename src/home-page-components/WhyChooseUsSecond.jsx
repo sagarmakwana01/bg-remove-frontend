@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // For API calls
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const WhyChooseUsSecond = () => {
   const [whyChoose2Data, setwhyChoose2Data] = useState(null);
@@ -10,7 +11,7 @@ const WhyChooseUsSecond = () => {
   useEffect(() => {
     const fetchWhyChoose2Data = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/why-choose-us-2'); // adjust your backend URL here
+        const res = await axios.get(`${apiUrl}/why-choose-us-2`); // adjust your backend URL here
         if (res.data.success) {
           setwhyChoose2Data(res.data.data); // Assuming you want the first header
         }
@@ -53,7 +54,7 @@ const WhyChooseUsSecond = () => {
             >
               <img
                 className="expand-slide-img"
-                src={`http://localhost:3000/why-choose-us/${slide.imageUrl}`}
+                src={`${apiUrl}/why-choose-us/${slide.imageUrl}`}
                 alt=""
               />
               <div className="expand-slide-ic-box">

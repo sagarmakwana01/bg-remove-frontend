@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // For API calls
 import { toast,ToastContainer } from 'react-toastify'; // Import toast
 import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
+const apiUrl = import.meta.env.VITE_API_URL;
 const Footer = () => {
   const [footerData, setFooterData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchFooterData = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/footers'); // adjust your backend URL here
+        const res = await axios.get(`${apiUrl}/footers`); // adjust your backend URL here
         if (res.data.success) {
           setFooterData(res.data.data[0]); // Assuming you want the first header
         }
@@ -42,7 +43,7 @@ fetchFooterData();
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/create-subscription', { email });
+      const res = await axios.post(`${apiUrl}/create-subscription`, { email });
 
       if (res.data.success) {
         toast.success('Subscription successful!');
@@ -107,7 +108,7 @@ fetchFooterData();
                   {footerData.socialMedia.map((socialItem,index) => (
                       <li key={index}>
                         <a href={socialItem.link}>
-                       <img src={`http://localhost:3000/socialMedia/${socialItem.image}`} style={{width:'100%'}} alt="Facebook" />
+                       <img src={`${apiUrl}/socialMedia/${socialItem.image}`} style={{width:'100%'}} alt="Facebook" />
                         </a>
                       </li>
                     ))}

@@ -4,6 +4,10 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Testimonial.css';
+// In any component or file
+const apiUrl = import.meta.env.VITE_API_URL;
+
+
 
 const Testimonials = () => {
   const [testimonialData, setTestimonialData] = useState([]);
@@ -14,7 +18,7 @@ const Testimonials = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/get-testimonial');
+        const res = await axios.get(`${apiUrl}/get-testimonial`);
         if (res.data.success && Array.isArray(res.data.data)) {
           setTestimonialData(res.data.data);
         }
@@ -68,7 +72,7 @@ const Testimonials = () => {
                       <div className="owl-testimonials-bottom">
                         <div className="owl-testimonials-img">
                           <img
-                            src={`http://localhost:3000/testimonial/${item.author_image}`}
+                            src={`${apiUrl}/testimonial/${item.author_image}`}
                             alt={item.author_name}
                           />
                         </div>

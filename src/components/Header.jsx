@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // For API calls
-
+const apiUrl = import.meta.env.VITE_API_URL;
 const Header = () => {
   const [headerData, setHeaderData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ const Header = () => {
   useEffect(() => {
     const fetchHeaderData = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/header'); // adjust your backend URL here
+        const res = await axios.get(`${apiUrl}/header`); // adjust your backend URL here
         if (res.data.success) {
           setHeaderData(res.data.data[0]); // Assuming you want the first header
         }
