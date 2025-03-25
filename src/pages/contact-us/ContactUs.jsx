@@ -14,7 +14,7 @@ const ContactUs = () => {
     name: '',
     email: '',
     message: '',
-    supportTypeId: '',
+    support_typeId: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -125,8 +125,8 @@ const ContactUs = () => {
       errors.message = 'Message should be at least 10 characters';
     }
 
-    if (!formData.supportTypeId) {
-      errors.supportTypeId = 'Please select a support type';
+    if (!formData.support_typeId) {
+      errors.support_typeId = 'Please select a support type';
     }
 
     return errors;
@@ -166,7 +166,7 @@ const ContactUs = () => {
         name: formData.name,
         email: formData.email,
         message: formData.message,
-        supportTypeId: parseInt(formData.supportTypeId)
+        support_typeId: parseInt(formData.support_typeId)
       });
 
       const { success, message } = response.data;
@@ -177,7 +177,7 @@ const ContactUs = () => {
           name: '',
           email: '',
           message: '',
-          supportTypeId: ''
+          support_typeId: ''
         });
         setErrors({});
       } else {
@@ -287,9 +287,9 @@ const ContactUs = () => {
                     <div className='form-group'>
                       <label>What type of support do you need?</label>
                       <select
-                        name='supportTypeId'
-                        className={`form-control ${errors.supportTypeId ? 'is-invalid' : ''}`}
-                        value={formData.supportTypeId}
+                        name='support_typeId'
+                        className={`form-control ${errors.support_typeId ? 'is-invalid' : ''}`}
+                        value={formData.support_typeId}
                         onChange={handleChange}
                       >
                         <option value="">Select Support Type</option>
@@ -303,7 +303,7 @@ const ContactUs = () => {
                           <option disabled>Loading...</option>
                         )}
                       </select>
-                      {errors.supportTypeId && <small className="text-danger">{errors.supportTypeId}</small>}
+                      {errors.support_typeId && <small className="text-danger">{errors.support_typeId}</small>}
                     </div>
 
                     <button

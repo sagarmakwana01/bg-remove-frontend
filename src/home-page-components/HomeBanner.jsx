@@ -10,7 +10,7 @@ const sampleImages = [
 const HomeBanner = () => {
   const [_, setFile] = useState(null);
   const [originalImage, setOriginalImage] = useState('img/30701b7169d5ba0b1f01dad0eb18bc2e.jpg'); // Default Original Image
-  const [removedBgImage, setRemovedBgImage] = useState('img/314f99534e84b8aab56d808477cbb2e5.png'); // Default Removed BG Image
+  const [removedBgImage, setRemovedBgImage] = useState('img/man-removebg.png'); // Default Removed BG Image
   const [loading, setLoading] = useState(false);
   const removeBg = async (formData) => {
     setLoading(true);

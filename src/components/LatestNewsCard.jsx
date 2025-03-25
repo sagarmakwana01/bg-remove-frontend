@@ -123,7 +123,7 @@ const LatestNewsCard = () => {
                   </div>
                   <div className="latest-news-items-bottom">
                     <h4><Link to="/">{article.title}</Link></h4>
-                    <div dangerouslySetInnerHTML={{__html: article.content}}></div>
+                    <div dangerouslySetInnerHTML={{__html: article.content.substring(0,130)}}></div>
                     <Link to={`/blog/${article.id}`}>Read More <img src="img/chevron-double-right.png" alt="Read More" /></Link>
                   </div>
                 </div>
