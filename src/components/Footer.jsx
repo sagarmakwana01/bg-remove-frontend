@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios'; // For API calls
 import { toast,ToastContainer } from 'react-toastify'; // Import toast
 import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
@@ -8,8 +9,7 @@ const Footer = () => {
   const [loading, setLoading] = useState(true);
 
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+ 
   
   // Fetch header data on component mount
   useEffect(() => {
@@ -99,7 +99,7 @@ fetchFooterData();
             <div className="col-lg-3 col-md-6">
               <div className="footer-center-item">
                 <div className="footer-logo">
-                  <a href="#"><span>{footerData.logoText}</span></a>
+                  <Link to="/"><span>{footerData.logoText}</span></Link>
                 </div>
 
                 <div className="footer-social-media">
@@ -107,9 +107,9 @@ fetchFooterData();
                   <ul>
                   {footerData.socialMedia.map((socialItem,index) => (
                       <li key={index}>
-                        <a href={socialItem.link}>
-                       <img src={`${apiUrl}/socialMedia/${socialItem.image}`} style={{width:'100%'}} alt="Facebook" />
-                        </a>
+                        <Link to={socialItem.link}>
+                       <img src={`${apiUrl}/static/socialMedia/${socialItem.image}`} style={{width:'100%'}} alt="Facebook" />
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -124,7 +124,7 @@ fetchFooterData();
                   <ul>
                   {footerData.toolsAPI.map((toolItem,index) => (
                       <li key={index}>
-                        <a href={toolItem.url}>{toolItem.title}</a>
+                        <Link to={toolItem.url}>{toolItem.title}</Link>
                       </li>
                     ))}
                     
@@ -135,7 +135,7 @@ fetchFooterData();
                   <ul>
                   {footerData.companyLinks.map((companyItem, index) => (
                       <li key={index}>
-                        <a href={companyItem.url}>{companyItem.title}</a>
+                        <Link to={companyItem.url}>{companyItem.title}</Link>
                       </li>
                     ))}
                   </ul>
@@ -150,7 +150,7 @@ fetchFooterData();
                   <ul>
                   {footerData.howToUse.map((howToUseItem,index) => (
                       <li key={index}>
-                        <a href={howToUseItem.url}>{howToUseItem.title}</a>
+                        <Link to={howToUseItem.url}>{howToUseItem.title}</Link>
                       </li>
                     ))}
                   </ul>
@@ -165,7 +165,7 @@ fetchFooterData();
                   <ul>
                   {footerData.support.map((supportItem,index) => (
                       <li key={index}>
-                        <a href={supportItem.url}>{supportItem.title}</a>
+                        <Link to={supportItem.url}>{supportItem.title}</Link>
                       </li>
                     ))}
                   </ul>

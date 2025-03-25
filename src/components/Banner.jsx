@@ -1,15 +1,17 @@
 // BlogBanner.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Banner = () => {
+const Banner = ({ title, page }) => {
   return (
     <section className="blog-banner">
       <div className="container w-1240">
         <div className="blog-banner-items">
-          <h1>Blog Page</h1>
+          <h1>{title}</h1>
           <ul>
-            <li><a href="#">Home /</a></li>
-            <li> About Us</li>
+            <li><Link to="/">Home</Link></li>
+            <li>/</li>
+            <li>{page}</li>
           </ul>
         </div>
       </div>

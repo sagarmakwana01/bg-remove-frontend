@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // For API calls
+import { Link } from 'react-router-dom';
+
 const apiUrl = import.meta.env.VITE_API_URL;
 const Header = () => {
   const [headerData, setHeaderData] = useState(null);
@@ -42,16 +44,17 @@ const Header = () => {
 
             <div className="h-header-nav">
               <div className="h-header-logo">
-                <a href="#">
+                <Link to="/">
                 <span>{headerData.logoText}</span>
-                </a>
+                </Link>
+              
               </div>
 
               <div className="h-main-menu" id="h-sidebar-wrapper">
                 <div className="h-header-card">
                   <div className="m-mobile-card">
                     <div className="m-header-logo">
-                      <a href="#"><span>BackGround Remove.AI</span></a>
+                      <Link to="/"><span>BackGround Remove.AI</span></Link>
                     </div>
                     <div className="menu-close-icon">
                       <i className="far fa-times-circle"></i>
@@ -61,16 +64,16 @@ const Header = () => {
                   <ul>
                     {headerData.menuItems.map((menuItem) => (
                       <li key={menuItem.id}>
-                        <a href={menuItem.url}>{menuItem.label}</a>
+                        <Link to={menuItem.url}>{menuItem.label}</Link>
                       </li>
                     ))}
                   </ul>
 
                   <div className="m-login-sign h-login">
-                    <a href="#">
+                    <Link to="javascript:void(0)">
                       Login / Sign Up
                       <img src="/img/person-sharp.png" alt="person" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -83,10 +86,10 @@ const Header = () => {
                 </div>
 
                 <div className="h-login">
-                  <a href="#">
+                  <Link to="#">
                     Login / Sign Up
                     <img src="/img/person-sharp.png" alt="person" />
-                  </a>
+                  </Link>
                 </div>
               </div>
 

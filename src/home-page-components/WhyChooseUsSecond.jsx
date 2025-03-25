@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // For API calls
+import { Link } from 'react-router-dom';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const WhyChooseUsSecond = () => {
   const [whyChoose2Data, setwhyChoose2Data] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeSlideIndex, setActiveSlideIndex] = useState(null); // Track the active slide
+
+  const [whyChooseSections2, setWhyChooseSections2] = useState([]); // Holds the "Why Choose First Section" data
+    const [sectionsLoading2, setSectionsLoading2] = useState(true);
 
   // Fetch header data on component mount
   useEffect(() => {
@@ -24,6 +28,29 @@ const WhyChooseUsSecond = () => {
     fetchWhyChoose2Data();
   }, []);
 
+    // Fetch "Why Choose First Section" data from API
+    useEffect(() => {
+      const fetchWhyChooseSections2 = async () => {
+        try {
+          const res = await axios.get(`${apiUrl}/get-why-choose-second-section-api`);
+          if (res.data.success && Array.isArray(res.data.data)) {
+            setWhyChooseSections2(res.data.data);
+          } else {
+            console.warn('No section data found');
+          }
+        } catch (error) {
+          console.error('Error fetching section data:', error);
+        } finally {
+          setSectionsLoading2(false);
+        }
+      };
+  
+      fetchWhyChooseSections2();
+    }, []);
+  
+    if (loading || sectionsLoading2) return <div>Loading...</div>;
+
+
   if (loading) {
     return <div>Loading...</div>; // Or a spinner
   }
@@ -40,11 +67,19 @@ const WhyChooseUsSecond = () => {
   return (
     <section className="why-choose-us">
       <div className="container w-1240">
-        <div className="why-choose-us-heading">
-          <h5>WHY CHOOSE US?</h5>
-          <h2>Who is it made for?</h2>
-          <p>Whether you’re a seasoned photographer, a creative graphic designer, an innovative marketer, or running a dynamic eCommerce store, Removal.AI will seamlessly adapt to your specific needs.</p>
-        </div>
+      {whyChooseSections2.length > 0 ? (
+          whyChooseSections2.map((section, index) => (
+            <div key={index} className="why-choose-us-heading">
+              <h5>{section.title}</h5>
+              <h2>{section.title2}</h2>
+              <p>
+                {section.content}
+              </p>
+            </div>
+          ))
+        ) : (
+          <div>No sections available</div>
+        )}
         <div className="expand-container">
           {whyChoose2Data.map((slide, index) => (
             <div
@@ -54,14 +89,14 @@ const WhyChooseUsSecond = () => {
             >
               <img
                 className="expand-slide-img"
-                src={`${apiUrl}/why-choose-us/${slide.imageUrl}`}
+                src={`${apiUrl}/static/why-choose-us/${slide.imageUrl}`}
                 alt=""
               />
               <div className="expand-slide-ic-box">
                 <div className="expand-slide-ic-box-items">
                   <img src="img/why-icon-01.png" alt="Image" />
                   <h2>
-                    <a href={slide.link}>{slide.linkName}</a>
+                    <Link to={slide.link}>{slide.linkName}</Link>
                   </h2>
                 </div>
               </div>

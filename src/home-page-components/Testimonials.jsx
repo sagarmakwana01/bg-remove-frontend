@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Testimonial.css';
+import { Link } from 'react-router-dom';
 // In any component or file
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -11,6 +12,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const Testimonials = () => {
   const [testimonialData, setTestimonialData] = useState([]);
+  const [sectionData, setSectionData] = useState(null);
+  const [sectionLoading, setSectionLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef(null);
@@ -31,6 +34,26 @@ const Testimonials = () => {
 
     fetchTestimonials();
   }, []);
+  useEffect(() => {
+    const fetchSectionData = async () => {
+      try {
+        const res = await axios.get(`${apiUrl}/testimonial-section-api`);
+        if (res.data.success && res.data.data) {
+          setSectionData(res.data.data); // Assuming it's a single object, not an array
+        } else {
+          console.warn('No testimonial section data found');
+        }
+      } catch (error) {
+        console.error('Error fetching testimonial section data:', error);
+      } finally {
+        setSectionLoading(false);
+      }
+    };
+
+    fetchSectionData();
+  }, []);
+
+  if (loading || sectionLoading) return <div>Loading testimonials...</div>;
 
   if (loading) return <div>Loading testimonials...</div>;
   if (!testimonialData.length) return <div>No testimonials found</div>;
@@ -48,10 +71,12 @@ const Testimonials = () => {
   return (
     <section className="testimonials">
       <div className="container w-1240">
-        <div className="testimonials-heading">
-          <h5>TESTIMONIALS</h5>
-          <h2>From startups to established brands, you'll be in good company.</h2>
+      {sectionData.map((section, index) => (
+            <div className="testimonials-heading">
+          <h5>{section?.title || 'TESTIMONIALS'}</h5>
+          <h2>{section?.title2 || "From startups to established brands, you'll be in good company."}</h2>
         </div>
+      ))}
 
         <div className="slider-container">
           <Slider ref={sliderRef} {...settings}>
@@ -72,13 +97,13 @@ const Testimonials = () => {
                       <div className="owl-testimonials-bottom">
                         <div className="owl-testimonials-img">
                           <img
-                            src={`${apiUrl}/testimonial/${item.author_image}`}
+                            src={`${apiUrl}/static/testimonial/${item.author_image}`}
                             alt={item.author_name}
                           />
                         </div>
                         <div className="owl-testimonials-bottom-text">
                           <h4>
-                            <a href={item.link || '#'}>{item.author_name}</a>
+                            <Link to={item.link || '/'}>{item.author_name}</Link>
                           </h4>
                           <p>{item.author_designation}</p>
                         </div>

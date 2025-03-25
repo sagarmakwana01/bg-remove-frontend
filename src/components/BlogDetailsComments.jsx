@@ -1,22 +1,23 @@
 // BlogDetailsComments.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const BlogDetailsComments = () => {
+const BlogDetailsComments = ({comments}) => {
   return (
     <section className="blog-details-comments">
       <div className="container w-1240">
         <div className="blog-details-comments-items">
           <div className="blog-details-comments-items-img">
-            <img src="img/comment-img.png" alt="comment-img" />
+            <img src="/img/comment-img.png" alt="comment-img" />
           </div>
           <div className="blog-details-comments-content">
             <div className="blog-details-comments-content-top">
               <div className="blog-details-comments-content-top-title">
-                <h5><a href="#">Valeria</a></h5>
+                <h5><Link to="/">Valeria</Link></h5>
                 <p>NOV 3, 2021</p>
               </div>
               <div className="blog-details-comments-content-top-right">
-                <img src="img/comment-icon.png" alt="comment" />
+                <img src="/img/comment-icon.png" alt="comment" />
                 <span>Reply</span>
               </div>
             </div>
@@ -31,16 +32,16 @@ const BlogDetailsComments = () => {
 
         <div className="blog-details-comments-items">
           <div className="blog-details-comments-items-img">
-            <img src="img/comment-img.png" alt="comment-img" />
+            <img src="/img/comment-img.png" alt="comment-img" />
           </div>
           <div className="blog-details-comments-content">
             <div className="blog-details-comments-content-top">
               <div className="blog-details-comments-content-top-title">
-                <h5><a href="#">Valeria</a></h5>
+                <h5><Link to="#">Valeria</Link></h5>
                 <p>NOV 3, 2021</p>
               </div>
               <div className="blog-details-comments-content-top-right">
-                <img src="img/comment-icon.png" alt="comment" />
+                <img src="/img/comment-icon.png" alt="comment" />
                 <span>Reply</span>
               </div>
             </div>
@@ -55,16 +56,16 @@ const BlogDetailsComments = () => {
 
         <div className="blog-details-comments-items">
           <div className="blog-details-comments-items-img">
-            <img src="img/comment-img.png" alt="comment-img" />
+            <img src="/img/comment-img.png" alt="comment-img" />
           </div>
           <div className="blog-details-comments-content">
             <div className="blog-details-comments-content-top">
               <div className="blog-details-comments-content-top-title">
-                <h5><a href="#">Valeria</a></h5>
+                <h5><Link to="/">Valeria</Link></h5>
                 <p>NOV 3, 2021</p>
               </div>
               <div className="blog-details-comments-content-top-right">
-                <img src="img/comment-icon.png" alt="comment" />
+                <img src="/img/comment-icon.png" alt="comment" />
                 <span>Reply</span>
               </div>
             </div>

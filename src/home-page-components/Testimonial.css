@@ -39,6 +39,7 @@
   .slick-slider .slick-track, .slick-slider .slick-list{
     display: flex;
     gap: 20px;
+    min-height: 286px;
   }
   
   .custom-arrow:hover {

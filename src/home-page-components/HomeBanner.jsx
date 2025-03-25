@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './home-banner.css'; // Ensure to create and include this CSS file
+import { Link } from 'react-router-dom';
 const sampleImages = [
   'img/animal_thumb.png',
   'img/human_thumb.png',
@@ -115,9 +116,9 @@ const HomeBanner = () => {
 
                 <p>
                   By uploading an image or URL you agree to our
-                  <a href="#"> Terms of Service </a>. This site is protected by reCaptcha and its
-                  <a href="#"> Privacy Policy </a> and
-                  <a href="#"> Terms of Service </a> apply.
+                  <Link to="/terms-and-conditions"> Terms of Service </Link>. This site is protected by reCaptcha and its
+                  <Link to="/terms-and-conditions"> Privacy Policy </Link> and
+                  <Link to="/terms-and-conditions"> Terms of Service </Link> apply.
                 </p>
               </div>
             </div>

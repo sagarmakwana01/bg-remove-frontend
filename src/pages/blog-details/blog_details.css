@@ -129,6 +129,9 @@ a:hover { text-decoration:none; }
     color: var(--Secondary-Color);
     margin: 0;
 }
+.success-message{
+    color: green;
+}
 .blog-details-share>ul {display: flex; gap: 5px;}
 .blog-details-share>ul>li {
     background: var(--Background-Color);
@@ -164,6 +167,9 @@ a:hover { text-decoration:none; }
     letter-spacing: 0%;
     color: var(--Secondary-Color);
 }
+.error-message{
+    color: red;
+}
 .blog-details-latest-card-right ul li{ display: flex; gap: 10px; }
 .blog-details-latest-card-right ul li img {  width: 14px; height: 21px; object-fit: contain;}
 .blog-details-latest-card-right ul li span{
@@ -176,7 +182,7 @@ a:hover { text-decoration:none; }
 }
 
 
-.blog-details-comments-items:nth-child(even) { padding-left: 160px;}
+.blog-details-comments-items.left-side { padding-left: 160px;}
 .blog-details-comments-items:last-child { border: 0;}
 .blog-details-comments-items { display: flex; gap: 55px; padding: 20px 0; border-bottom: 2px solid #F2F2F2;}
 .blog-details-comments-content { width: 100%;}
@@ -269,7 +275,7 @@ a:hover { text-decoration:none; }
     color: var(--Secondary-Color);
     margin: 0;
 }
-.leave-a-comment-btn a {
+.leave-a-comment-btn button {
     display: inline-block;
     padding: 10px 76px;
     font-family: Open Sans;
@@ -279,7 +285,9 @@ a:hover { text-decoration:none; }
     letter-spacing: 0%;
     color: var(--Secondary-Color);
     background: var(--Accent-Color);
+    border: none;
     border-radius: 6px;
+    outline: none;
 }
 
 /* Blog Details Page End */
@@ -295,7 +303,7 @@ a:hover { text-decoration:none; }
   .blog-details .row { row-gap: 30px;}
 
   .blog-details-comments-items { gap: 35px; flex-direction: column;}
-  .blog-details-comments-items:nth-child(even) { padding-left: 145px;}
+  .blog-details-comments-items.left-side { padding-left: 145px;}
 
 }
 
@@ -312,12 +320,12 @@ a:hover { text-decoration:none; }
 
 
     .blog-details {padding: 30px 0 30px 0;}
-    .blog-details-comments-items:nth-child(even) { padding-left: 0; }
+    .blog-details-comments-items.left-side { padding-left: 0; }
     .blog-details-comments-items { align-items: center; flex-direction: column;}
 
     .leave-a-comment { padding: 40px 0;}
     .leave-a-comment-title h3 { font-size: 20px; line-height: 24px;}
     .leave-a-comment-title { padding-bottom: 20px;}
-    .leave-a-comment-btn a { font-size: 18px; line-height: 24.24px;}
+    .leave-a-comment-btn button { font-size: 18px; line-height: 24.24px;}
 }
 

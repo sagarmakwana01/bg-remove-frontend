@@ -7,6 +7,9 @@ const WhyChooseUs = () => {
   const [activeTab, setActiveTab] = useState(''); // Holds the current active tab name
   const [loading, setLoading] = useState(true); // Loading state
 
+  const [whyChooseSections, setWhyChooseSections] = useState([]); // Holds the "Why Choose First Section" data
+  const [sectionsLoading, setSectionsLoading] = useState(true);
+
   // Fetch data from API
   useEffect(() => {
     const fetchTabs = async () => {
@@ -28,6 +31,30 @@ const WhyChooseUs = () => {
     fetchTabs();
   }, []);
 
+  // Fetch "Why Choose First Section" data from API
+  useEffect(() => {
+    const fetchWhyChooseSections = async () => {
+      try {
+        const res = await axios.get(`${apiUrl}/get-why-choose-first-section-api`);
+        if (res.data.success && Array.isArray(res.data.data)) {
+          setWhyChooseSections(res.data.data);
+        } else {
+          console.warn('No section data found');
+        }
+      } catch (error) {
+        console.error('Error fetching section data:', error);
+      } finally {
+        setSectionsLoading(false);
+      }
+    };
+
+    fetchWhyChooseSections();
+  }, []);
+
+  if (loading || sectionsLoading) return <div>Loading...</div>;
+
+
+
   if (loading) return <div>Loading...</div>;
   if (!tabs.length) return <div>No tabs available</div>;
 
@@ -39,14 +66,20 @@ const WhyChooseUs = () => {
   return (
     <section className="why-choose-us">
       <div className="container w-1240">
-        <div className="why-choose-us-heading">
-          <h5>WHY CHOOSE US?</h5>
-          <h2>Amazing image quality for various scenarios</h2>
-          <p>
-            Create designs with our background remover tool. Turn your images into art, stunning banners,
-            visual presentations, product catalog, and graphics—fully customizable for your needs.
-          </p>
-        </div>
+        {whyChooseSections.length > 0 ? (
+          whyChooseSections.map((section, index) => (
+            <div key={index} className="why-choose-us-heading">
+              <h5>{section.title}</h5>
+              <h2>{section.title2}</h2>
+              <p>
+                {section.content}
+              </p>
+            </div>
+          ))
+        ) : (
+          <div>No sections available</div>
+        )}
+
 
         {/* Tab Menu */}
         <div className="why-choose-d-tab-wrapper">
@@ -77,7 +110,7 @@ const WhyChooseUs = () => {
                   {tab.tabImages.map((img, imgIndex) => (
                     <img
                       key={imgIndex}
-                      src={`${apiUrl}/why-choose-us/${img}`}
+                      src={`${apiUrl}/static/why-choose-us/${img}`}
                       alt={`Tab ${tab.tabName} Image ${imgIndex + 1}`}
                     />
                   ))}
