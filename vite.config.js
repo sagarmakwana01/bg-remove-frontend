@@ -1,11 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
+  plugins: [react()],
   server: {
-    proxy: {
-      '/api': 'http://localhost:3000', // Proxy requests to the backend
-    },
+    host: "0.0.0.0",  // Allow external access
+    port: process.env.PORT || 10000, // Use Render's PORT
+    strictPort: true,
+    cors: true,
   },
+  preview: {
+    port: process.env.PORT || 10000,
+    allowedHosts: ["bg-remove-ays8.onrender.com"] // Allow your Render host
+  }
 });

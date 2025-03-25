@@ -9,7 +9,7 @@ const LatestNewsCard = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [skip, setSkip] = useState(0);
-  const take = 5;
+  const take = 6;
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
