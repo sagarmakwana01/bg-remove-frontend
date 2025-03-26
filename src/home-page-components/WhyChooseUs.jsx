@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Skeleton from 'react-loading-skeleton'; // Import Skeleton
-import 'react-loading-skeleton/dist/skeleton.css'; // Import the default styles for Skeleton
 import './WhyChoose.css';
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -56,40 +54,11 @@ const WhyChooseUs = () => {
   }, []);
 
   // Loading state
-  if (loading || sectionsLoading) {
-    return (
-      <div className="why-choose-us">
-        <div className="container w-1240">
-          {/* Skeleton for sections */}
-          <Skeleton height={50} width="100%" />
-          <Skeleton height={30} width="100%" />
-          <Skeleton height={20} width="100%" count={3} />
-          
-          {/* Skeleton for tabs */}
-          <div className="why-choose-d-tab-wrapper">
-            <div className="why-choose-tab-menu">
-              <ul>
-                {[...Array(3)].map((_, index) => (
-                  <li key={index}>
-                    <Skeleton width={150} height={30} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          
-          {/* Skeleton for tab content */}
-          <div className="why-choose-tab-container">
-            {[...Array(3)].map((_, index) => (
-              <div key={index} className="why-choose-tab">
-                <Skeleton height={200} width="100%" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (loading || sectionsLoading) {
+  //   return (
+  //     <div>Loading...</div>
+  //   );
+  // }
 
   // Handle no data
   if (!tabs.length || !whyChooseSections.length) return <div>No data available</div>;
@@ -104,7 +73,7 @@ const WhyChooseUs = () => {
       <div className="container w-1240">
         {whyChooseSections.length > 0 ? (
           whyChooseSections.map((section, index) => (
-            <div key={index} className="why-choose-us-heading">
+            <div key={section.id || index} className="why-choose-us-heading">
               <h5>{section.title}</h5>
               <h2>{section.title2}</h2>
               <p>{section.content}</p>
@@ -118,8 +87,8 @@ const WhyChooseUs = () => {
         <div className="why-choose-d-tab-wrapper">
           <div className="why-choose-tab-menu">
             <ul>
-              {tabs.map((tab, index) => (
-                <li key={index}>
+              {tabs.map((tab) => (
+                <li key={tab.tabName}>
                   <button
                     className={`why-choose-tab-a ${activeTab === tab.tabName.toLowerCase() ? 'why-choose-active-a' : ''}`}
                     onClick={() => handleTabClick(tab.tabName)}
@@ -133,9 +102,9 @@ const WhyChooseUs = () => {
 
           {/* Tab Content */}
           <div className="why-choose-tab-container">
-            {tabs.map((tab, index) => (
+            {tabs.map((tab) => (
               <div
-                key={index}
+                key={tab.tabName}
                 className={`why-choose-tab ${activeTab === tab.tabName.toLowerCase() ? 'why-choose-tab-active' : ''}`}
                 data-id={tab.tabName}
               >
@@ -149,7 +118,7 @@ const WhyChooseUs = () => {
                       />
                     ))
                   ) : (
-                    <Skeleton height={200} width="100%" /> // Skeleton for images
+                    <div>No images available</div>
                   )}
                 </div>
               </div>

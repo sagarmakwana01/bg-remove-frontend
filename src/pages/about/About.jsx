@@ -86,12 +86,14 @@ function About() {
   const error = errorAbout || errorMission || errorVision || errorGoal;
 
   if (loading) {
-    return <div className="container">Loading...</div>;
+    return (
+      <div className="loader-container">
+        <div className="loader"></div>
+      </div>
+    );
   }
 
-  if (error || !aboutData) {
-    return <div className="container">Failed to load data.</div>;
-  }
+
 
   return (
     <>

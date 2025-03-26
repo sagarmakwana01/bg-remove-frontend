@@ -1,15 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
-import './home-page.css'
-import HomeBanner from '../../home-page-components/HomeBanner.jsx'
-import WhyChooseUs from '../../home-page-components/WhyChooseUs.jsx'
-import RemoveBgInstantly from '../../home-page-components/RemoveBgInstantly .jsx'
-import CoolDesignsAsYouWish from '../../home-page-components/CoolDesignsAsYouWish .jsx'
-import EasyAPIIntegrationForSpeedy from '../../home-page-components/EasyAPIIntegrationForSpeedy .jsx'
-import WhyChooseUsSecond from '../../home-page-components/WhyChooseUsSecond.jsx'
-import Testimonials from '../../home-page-components/Testimonials.jsx'
-import LatestNews from '../../home-page-components/LatestNews.jsx'
+import React, { useEffect, useState } from "react";
+import './home-page.css';
+import HomeBanner from '../../home-page-components/HomeBanner.jsx';
+import WhyChooseUs from '../../home-page-components/WhyChooseUs.jsx';
+import RemoveBgInstantly from '../../home-page-components/RemoveBgInstantly .jsx';
+import CoolDesignsAsYouWish from '../../home-page-components/CoolDesignsAsYouWish .jsx';
+import EasyAPIIntegrationForSpeedy from '../../home-page-components/EasyAPIIntegrationForSpeedy .jsx';
+import WhyChooseUsSecond from '../../home-page-components/WhyChooseUsSecond.jsx';
+import Testimonials from '../../home-page-components/Testimonials.jsx';
+import LatestNews from '../../home-page-components/LatestNews.jsx';
+
 const Home = () => {
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    setTimeout(() => setLoading(false), 1000); // Simulating loading time
+
     let $slides = $('.slide');
     let $active = $('.slide.active');
 
@@ -24,19 +29,16 @@ const Home = () => {
         const $before = $('#banner-before');
         const $beforeImage = $before.find('img');
         const $resizer = $('#resizer');
-
         let active = false;
 
-        // Sort overflow out for Overlay Image
         function updateImageWidth() {
             let width = $slider.width();
             $beforeImage.css('width', width + 'px');
         }
 
-        updateImageWidth(); // Initial setup
-        $(window).resize(updateImageWidth); // Adjust width on resize
+        updateImageWidth();
+        $(window).resize(updateImageWidth);
 
-        // Mouse events
         $resizer.on('mousedown', function () {
             active = true;
             $resizer.addClass('resize');
@@ -54,7 +56,6 @@ const Home = () => {
             pauseEvent(e);
         });
 
-        // Touch events
         $resizer.on('touchstart', function () {
             active = true;
             $resizer.addClass('resize');
@@ -85,18 +86,26 @@ const Home = () => {
     });
    }, []);
 
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   return (
     <>
-    <HomeBanner />
-    <WhyChooseUs />
-    <RemoveBgInstantly />
-    <CoolDesignsAsYouWish />
-    <EasyAPIIntegrationForSpeedy />
-    <WhyChooseUsSecond />
-    <Testimonials />
-    <LatestNews />
+      <HomeBanner />
+      <WhyChooseUs />
+      <RemoveBgInstantly />
+      <CoolDesignsAsYouWish />
+      <EasyAPIIntegrationForSpeedy />
+      <WhyChooseUsSecond />
+      <Testimonials />
+      <LatestNews />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

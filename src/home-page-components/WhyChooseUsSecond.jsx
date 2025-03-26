@@ -51,9 +51,9 @@ const WhyChooseUsSecond = () => {
     if (loading || sectionsLoading2) return <div>Loading...</div>;
 
 
-  if (loading) {
-    return <div>Loading...</div>; // Or a spinner
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Or a spinner
+  // }
 
   if (!whyChoose2Data) {
     return <div>No data found</div>;

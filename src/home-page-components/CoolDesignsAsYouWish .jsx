@@ -26,9 +26,9 @@ const CoolDesignsAsYouWish = () => {
     fetchServiceData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>; // Or a spinner
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Or a spinner
+  // }
   return (
     <section className="remove-bg-instantly cool-designs-as-you-wish">
       <div className="container w-1240">

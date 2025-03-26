@@ -24,9 +24,9 @@ const RemoveBgInstantly = () => {
     fetchServiceData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>; // Or a spinner
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Or a spinner
+  // }
   return (
     <section className="remove-bg-instantly">
       <div className="container w-1240">

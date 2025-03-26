@@ -267,7 +267,38 @@ body { margin: 0; padding: 0; }
 .faq_accordion_item.active .faq-plus-img  { display: none;}
 .faq_menu_img .faq-mines-img { display: none;}
 /* Faq End */
-
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #007bff;
+    border-top: 5px solid #ffffff;
+    border-radius: 50%;
+    
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Loader Animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
 @media(max-width:991px){
     .get-in-touch-card { height: auto; padding: 20px; }

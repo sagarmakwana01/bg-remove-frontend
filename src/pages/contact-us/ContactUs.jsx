@@ -8,6 +8,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const ContactUs = () => {
   const [supportTypes, setSupportTypes] = useState([]);
+  const [loding, setLoding] = useState(true);
   const [faqs, setFaqs] = useState([]); // ✅ NEW: FAQs State
   const [getInTouchData, setGetInTouchData] = useState(null);
   const [formData, setFormData] = useState({

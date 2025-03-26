@@ -31,7 +31,11 @@ const BlogDetails = () => {
   }, [id]); // Only run when `id` changes
 
   if (loading) {
-    return <div>Loading...</div>; // Loading indicator
+    return (
+      <div className="loader-container-blog">
+        <div className="loader-blog"></div>
+      </div>
+    );
   }
 
   if (!blog) {

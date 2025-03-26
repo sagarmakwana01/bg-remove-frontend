@@ -25,9 +25,9 @@ const EasyAPIIntegrationForSpeedy = () => {
     fetchServiceData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>; // Or a spinner
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Or a spinner
+  // }
 
   return (
     <section className="remove-bg-instantly easy-api-integration-for-speedy">
