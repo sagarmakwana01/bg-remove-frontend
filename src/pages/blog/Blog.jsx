@@ -8,7 +8,6 @@ const Blog = () => {
     jQuery(".articles-press-portfoliobtn ul li:first-child a").addClass("active-1");
     jQuery(".articles-press-portfoliobtn ul li a").click(function () {
       var value = jQuery(this).attr('data-filter');
-      console.log(value);
   
       if (value == "all") {
         jQuery('.filter').show('1000');

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'; // For API calls
 import { Link } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton'; // Import Skeleton
+import 'react-loading-skeleton/dist/skeleton.css'; // Import the default styles for Skeleton
 
 const apiUrl = import.meta.env.VITE_API_URL;
+
 const Header = () => {
   const [headerData, setHeaderData] = useState(null);
   const [loading, setLoading] = useState(true);
-  
-  
+
   // Fetch header data on component mount
   useEffect(() => {
     const fetchHeaderData = async () => {
@@ -26,10 +28,25 @@ const Header = () => {
     fetchHeaderData();
   }, []);
 
+  // If loading, show skeletons
   if (loading) {
-    return <div>Loading...</div>; // Or a spinner
+    return (
+      <div>
+        <Skeleton height={100} width={2000} /> {/* Skeleton for logo */}
+        <div className="h-header-nav">
+          <ul>
+            {[...Array(5)].map((_, index) => (
+              <li key={index}>
+                <Skeleton width="100%" height={30} /> {/* Skeleton for menu items */}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    );
   }
 
+  // If no data, show a message
   if (!headerData) {
     return <div>No header data found</div>;
   }
@@ -45,9 +62,8 @@ const Header = () => {
             <div className="h-header-nav">
               <div className="h-header-logo">
                 <Link to="/">
-                <span>{headerData.logoText}</span>
+                  <span>{headerData.logoText}</span> {/* Display the real logo text */}
                 </Link>
-              
               </div>
 
               <div className="h-main-menu" id="h-sidebar-wrapper">
@@ -64,7 +80,7 @@ const Header = () => {
                   <ul>
                     {headerData.menuItems.map((menuItem) => (
                       <li key={menuItem.id}>
-                        <Link to={menuItem.url}>{menuItem.label}</Link>
+                        <Link to={menuItem.url}>{menuItem.label}</Link> {/* Real menu items */}
                       </li>
                     ))}
                   </ul>

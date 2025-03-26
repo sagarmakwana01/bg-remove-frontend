@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './blogDetailes.js';
+// import './blogDetailes.js';
 import './blog_details.css';
 import Banner from '../../components/Banner.jsx';
 import BlogContent from '../../components/BlogContent.jsx';

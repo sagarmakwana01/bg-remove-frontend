@@ -4,7 +4,6 @@ import './about-us.css';
 import { Link } from 'react-router-dom';
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log('API URL:', apiUrl); // Confirm the URL is loading correctly
 
 function About() {
   // Data states

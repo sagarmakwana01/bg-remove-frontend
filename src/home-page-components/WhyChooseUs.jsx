@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Skeleton from 'react-loading-skeleton'; // Import Skeleton
+import 'react-loading-skeleton/dist/skeleton.css'; // Import the default styles for Skeleton
 import './WhyChoose.css';
+
 const apiUrl = import.meta.env.VITE_API_URL;
+
 const WhyChooseUs = () => {
   const [tabs, setTabs] = useState([]); // Holds the fetched tab data
   const [activeTab, setActiveTab] = useState(''); // Holds the current active tab name
@@ -10,7 +14,7 @@ const WhyChooseUs = () => {
   const [whyChooseSections, setWhyChooseSections] = useState([]); // Holds the "Why Choose First Section" data
   const [sectionsLoading, setSectionsLoading] = useState(true);
 
-  // Fetch data from API
+  // Fetch data from API for tabs
   useEffect(() => {
     const fetchTabs = async () => {
       try {
@@ -31,7 +35,7 @@ const WhyChooseUs = () => {
     fetchTabs();
   }, []);
 
-  // Fetch "Why Choose First Section" data from API
+  // Fetch "Why Choose First Section" data
   useEffect(() => {
     const fetchWhyChooseSections = async () => {
       try {
@@ -51,12 +55,44 @@ const WhyChooseUs = () => {
     fetchWhyChooseSections();
   }, []);
 
-  if (loading || sectionsLoading) return <div>Loading...</div>;
+  // Loading state
+  if (loading || sectionsLoading) {
+    return (
+      <div className="why-choose-us">
+        <div className="container w-1240">
+          {/* Skeleton for sections */}
+          <Skeleton height={50} width="100%" />
+          <Skeleton height={30} width="100%" />
+          <Skeleton height={20} width="100%" count={3} />
+          
+          {/* Skeleton for tabs */}
+          <div className="why-choose-d-tab-wrapper">
+            <div className="why-choose-tab-menu">
+              <ul>
+                {[...Array(3)].map((_, index) => (
+                  <li key={index}>
+                    <Skeleton width={150} height={30} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          
+          {/* Skeleton for tab content */}
+          <div className="why-choose-tab-container">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="why-choose-tab">
+                <Skeleton height={200} width="100%" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-
-
-  if (loading) return <div>Loading...</div>;
-  if (!tabs.length) return <div>No tabs available</div>;
+  // Handle no data
+  if (!tabs.length || !whyChooseSections.length) return <div>No data available</div>;
 
   // Handle tab click
   const handleTabClick = (tabName) => {
@@ -71,15 +107,12 @@ const WhyChooseUs = () => {
             <div key={index} className="why-choose-us-heading">
               <h5>{section.title}</h5>
               <h2>{section.title2}</h2>
-              <p>
-                {section.content}
-              </p>
+              <p>{section.content}</p>
             </div>
           ))
         ) : (
           <div>No sections available</div>
         )}
-
 
         {/* Tab Menu */}
         <div className="why-choose-d-tab-wrapper">
@@ -107,13 +140,17 @@ const WhyChooseUs = () => {
                 data-id={tab.tabName}
               >
                 <div className="why-choose-tab-img">
-                  {tab.tabImages.map((img, imgIndex) => (
-                    <img
-                      key={imgIndex}
-                      src={`${apiUrl}/static/why-choose-us/${img}`}
-                      alt={`Tab ${tab.tabName} Image ${imgIndex + 1}`}
-                    />
-                  ))}
+                  {tab.tabImages.length > 0 ? (
+                    tab.tabImages.map((img, imgIndex) => (
+                      <img
+                        key={imgIndex}
+                        src={`${apiUrl}/static/why-choose-us/${img}`}
+                        alt={`Tab ${tab.tabName} Image ${imgIndex + 1}`}
+                      />
+                    ))
+                  ) : (
+                    <Skeleton height={200} width="100%" /> // Skeleton for images
+                  )}
                 </div>
               </div>
             ))}

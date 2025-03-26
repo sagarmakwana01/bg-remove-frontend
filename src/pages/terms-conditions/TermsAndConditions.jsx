@@ -1,5 +1,5 @@
 // TermsAndConditions.jsx
-import React,{useEffect, useState} from 'react';import './terms.js'
+import React,{useEffect, useState} from 'react';
 import './termsConditions.css'
 import Banner from '../../components/Banner.jsx';
 const apiUrl = import.meta.env.VITE_API_URL;

@@ -135,7 +135,6 @@ const Commentsection = ({ blogId }) => {
         console.error("Failed to fetch comments", error);
       }
     };
-    console.log(comments)
     const validateForm = () => {
       let tempErrors = {};
       if (!userData.name.trim()) tempErrors.name = "Name is required";
