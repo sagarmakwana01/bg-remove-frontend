@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './home-banner.css'; // Ensure to create and include this CSS file
 import { Link } from 'react-router-dom';
 const sampleImages = [
@@ -12,6 +12,73 @@ const HomeBanner = () => {
   const [originalImage, setOriginalImage] = useState('img/30701b7169d5ba0b1f01dad0eb18bc2e.jpg'); // Default Original Image
   const [removedBgImage, setRemovedBgImage] = useState('img/man-removebg.png'); // Default Removed BG Image
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const $slider = $('#banner-after-before-wrapper');
+    const $before = $('#banner-before');
+    const $beforeImage = $before.find('img');
+    const $resizer = $('#resizer');
+
+    let active = false;
+
+    const updateImageWidth = () => {
+        let width = $slider.width();
+        $beforeImage.css('width', width + 'px');
+    };
+
+    updateImageWidth(); // Initial setup
+    $(window).on('resize', updateImageWidth);
+
+    const startResize = () => {
+        active = true;
+        $resizer.addClass('resize');
+    };
+
+    const stopResize = () => {
+        active = false;
+        $resizer.removeClass('resize');
+    };
+
+    const resize = (e) => {
+        if (!active) return;
+        let x = e.pageX - $slider.offset().left;
+        slideIt(x);
+        e.preventDefault();
+    };
+
+    const touchResize = (e) => {
+        if (!active) return;
+        let x = e.originalEvent.touches[0].pageX - $slider.offset().left;
+        slideIt(x);
+        e.preventDefault();
+    };
+
+    const slideIt = (x) => {
+        let transform = Math.max(0, Math.min(x, $slider.width()));
+        $before.css('width', transform + 'px');
+        $resizer.css('left', transform + 'px');
+    };
+
+    $resizer.on('mousedown', startResize);
+    $(document).on('mouseup mouseleave', stopResize);
+    $(document).on('mousemove', resize);
+
+    $resizer.on('touchstart', startResize);
+    $(document).on('touchend touchcancel', stopResize);
+    $(document).on('touchmove', touchResize);
+
+    return () => {
+        $(window).off('resize', updateImageWidth);
+        $resizer.off('mousedown', startResize);
+        $(document).off('mouseup mouseleave', stopResize);
+        $(document).off('mousemove', resize);
+        $resizer.off('touchstart', startResize);
+        $(document).off('touchend touchcancel', stopResize);
+        $(document).off('touchmove', touchResize);
+    };
+}, []);
+
+
   const removeBg = async (formData) => {
     setLoading(true);
     try {

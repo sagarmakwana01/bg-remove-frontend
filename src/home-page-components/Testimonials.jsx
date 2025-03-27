@@ -72,7 +72,7 @@ const Testimonials = () => {
     <section className="testimonials">
       <div className="container w-1240">
       {sectionData.map((section, index) => (
-            <div className="testimonials-heading">
+            <div className="testimonials-heading" key={index}>
           <h5>{section?.title || 'TESTIMONIALS'}</h5>
           <h2>{section?.title2 || "From startups to established brands, you'll be in good company."}</h2>
         </div>
@@ -81,7 +81,7 @@ const Testimonials = () => {
         <div className="slider-container">
           <Slider ref={sliderRef} {...settings}>
             {testimonialData.map((item, index) => {
-              const centerIndex = currentSlide + 1 >= testimonialData.length
+              const centerIndex = currentSlide + 1 >= testimonialData?.length
                 ? 0
                 : currentSlide + 1;
 
@@ -92,20 +92,20 @@ const Testimonials = () => {
                   <div className={`owl-testimonials-col ${isCenter ? 'center-slide' : ''}`}>
                     <div className="owl-testimonials-items">
                       <div className="owl-testimonials-text">
-                        <p>{item.description}</p>
+                        <p>{item?.description}</p>
                       </div>
                       <div className="owl-testimonials-bottom">
                         <div className="owl-testimonials-img">
                           <img
-                            src={`${apiUrl}/static/testimonial/${item.author_image}`}
-                            alt={item.author_name}
+                            src={`${apiUrl}/static/testimonial/${item?.author_image}`}
+                            alt={item?.author_name}
                           />
                         </div>
                         <div className="owl-testimonials-bottom-text">
                           <h4>
-                            <Link to={item.link || '/'}>{item.author_name}</Link>
+                            <Link to={item?.link || '/'}>{item?.author_name}</Link>
                           </h4>
-                          <p>{item.author_designation}</p>
+                          <p>{item?.author_designation}</p>
                         </div>
                       </div>
                     </div>
