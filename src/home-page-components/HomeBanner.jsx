@@ -1,18 +1,19 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './home-banner.css'; // Ensure to create and include this CSS file
 import { Link } from 'react-router-dom';
+import { LuImageDown } from "react-icons/lu";
 const sampleImages = [
-  'img/animal_thumb.png',
-  'img/human_thumb.png',
-  'img/car1_thumb.png',
-  'img/product_thumb.png'
+  'img/02.jpg',
+  'img/03.jpg',
+  'img/05.jpg',
+  'img/06.jpg',
 ];
 const HomeBanner = () => {
   const [_, setFile] = useState(null);
   const [originalImage, setOriginalImage] = useState('img/30701b7169d5ba0b1f01dad0eb18bc2e.jpg'); // Default Original Image
   const [removedBgImage, setRemovedBgImage] = useState('img/man-removebg.png'); // Default Removed BG Image
   const [loading, setLoading] = useState(false);
-
+  const [isBgRemoved, setIsBgRemoved] = useState(false); 
   useEffect(() => {
     const $slider = $('#banner-after-before-wrapper');
     const $before = $('#banner-before');
@@ -22,41 +23,41 @@ const HomeBanner = () => {
     let active = false;
 
     const updateImageWidth = () => {
-        let width = $slider.width();
-        $beforeImage.css('width', width + 'px');
+      let width = $slider.width();
+      $beforeImage.css('width', width + 'px');
     };
 
     updateImageWidth(); // Initial setup
     $(window).on('resize', updateImageWidth);
 
     const startResize = () => {
-        active = true;
-        $resizer.addClass('resize');
+      active = true;
+      $resizer.addClass('resize');
     };
 
     const stopResize = () => {
-        active = false;
-        $resizer.removeClass('resize');
+      active = false;
+      $resizer.removeClass('resize');
     };
 
     const resize = (e) => {
-        if (!active) return;
-        let x = e.pageX - $slider.offset().left;
-        slideIt(x);
-        e.preventDefault();
+      if (!active) return;
+      let x = e.pageX - $slider.offset().left;
+      slideIt(x);
+      e.preventDefault();
     };
 
     const touchResize = (e) => {
-        if (!active) return;
-        let x = e.originalEvent.touches[0].pageX - $slider.offset().left;
-        slideIt(x);
-        e.preventDefault();
+      if (!active) return;
+      let x = e.originalEvent.touches[0].pageX - $slider.offset().left;
+      slideIt(x);
+      e.preventDefault();
     };
 
     const slideIt = (x) => {
-        let transform = Math.max(0, Math.min(x, $slider.width()));
-        $before.css('width', transform + 'px');
-        $resizer.css('left', transform + 'px');
+      let transform = Math.max(0, Math.min(x, $slider.width()));
+      $before.css('width', transform + 'px');
+      $resizer.css('left', transform + 'px');
     };
 
     $resizer.on('mousedown', startResize);
@@ -68,21 +69,22 @@ const HomeBanner = () => {
     $(document).on('touchmove', touchResize);
 
     return () => {
-        $(window).off('resize', updateImageWidth);
-        $resizer.off('mousedown', startResize);
-        $(document).off('mouseup mouseleave', stopResize);
-        $(document).off('mousemove', resize);
-        $resizer.off('touchstart', startResize);
-        $(document).off('touchend touchcancel', stopResize);
-        $(document).off('touchmove', touchResize);
+      $(window).off('resize', updateImageWidth);
+      $resizer.off('mousedown', startResize);
+      $(document).off('mouseup mouseleave', stopResize);
+      $(document).off('mousemove', resize);
+      $resizer.off('touchstart', startResize);
+      $(document).off('touchend touchcancel', stopResize);
+      $(document).off('touchmove', touchResize);
     };
-}, []);
+  }, []);
 
 
   const removeBg = async (formData) => {
     setLoading(true);
+    setIsBgRemoved(false); // Reset previous state
     try {
-      const response = await fetch('http://44.203.147.97/api/v1/remove-bg', {
+      const response = await fetch('https://sub.icondevteam.in/api/v1/remove-bg', {
         method: 'POST',
         body: formData,
       });
@@ -92,6 +94,10 @@ const HomeBanner = () => {
       const blob = await response.blob();
       const imageUrl = URL.createObjectURL(blob);
       setRemovedBgImage(imageUrl);
+
+      if (imageUrl !== originalImage) {
+        setIsBgRemoved(true); // Set flag to true when the background is removed
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -106,6 +112,7 @@ const HomeBanner = () => {
     reader.onload = (e) => {
       setOriginalImage(e.target.result);
       setRemovedBgImage(e.target.result);
+      setIsBgRemoved(false);
     };
     reader.readAsDataURL(selectedFile);
 
@@ -119,12 +126,12 @@ const HomeBanner = () => {
   const handleSampleClick = async (imageUrl) => {
     setOriginalImage(imageUrl);
     setRemovedBgImage(imageUrl);
-
+    setIsBgRemoved(false);
     // Convert Image URL to Blob
     const response = await fetch(imageUrl);
     const blob = await response.blob();
     const file = new File([blob], "sample.png", { type: blob.type });
-         console.log(file)
+    console.log(file)
     // Create FormData
     const formData = new FormData();
     formData.append('image', file);
@@ -169,8 +176,8 @@ const HomeBanner = () => {
                   </div>
 
                   <div className="banner-us-bottom-image">
-                  {sampleImages.map((image, index) => (
-                      <img
+                    {sampleImages.map((image, index) => (
+                      <img style={{ width: "48px", height: "48px", borderRadius: "6px" }}
                         key={index}
                         src={image}
                         alt="sample"
@@ -193,13 +200,15 @@ const HomeBanner = () => {
 
           <div className="col-lg-6">
             <div id="banner-after-before-wrapper">
+              {loading && <div className="skeleton-loader">
+                <p>Please wait it's processing ...</p>
+              </div>}
               <div id="banner-before">
                 <img className="content-image" src={originalImage} draggable="false" alt="before" />
               </div>
               <div id="banner-after" className='removed-bg-container'>
-                {loading && <div className="loading-spinner"></div>}
                 <img
-                  className={`content-image ${loading ? 'blurred' : ''}`}
+                  className={`content-image`}
                   src={removedBgImage}
                   draggable="false"
                   alt="after"
@@ -212,6 +221,19 @@ const HomeBanner = () => {
                 </div>
               </div>
             </div>
+            
+            {isBgRemoved && (
+            <div className='download-btn-container'>
+                      <a
+                        href={removedBgImage}
+                        download="background-removed.png"
+                        className="download-btn"
+                      >
+                        Download Image
+                      </a>
+                        <i className="fas fa-cloud-download-alt download-icon"></i>
+                      </div>
+                    )}
           </div>
         </div>
       </div>

@@ -11,9 +11,7 @@ const LatestNews = () => {
   const [newsSectionData, setNewsSectionData] = useState([]);
   useEffect(()=>{
     (async()=>{
-      const response = await axios.get(`${apiUrl}/getBlog`, {
-        params: { skip: 0, take:3, category:'all', selectedCategory : undefined },
-      });
+      const response = await axios.get(`${apiUrl}/getBlog`);
       const newArticles = response.data;
     
       setArticles(newArticles)
@@ -56,11 +54,11 @@ const LatestNews = () => {
 
         <div className="row">
           {
-            articles.map((article)=>{
+            articles.slice(0, 3).map((article)=>{
               return <div className="col-lg-4 col-md-6" key={article.id}>
               <div className="latest-news-items">
                 <div className="latest-news-items-img">
-                <img src={`${apiUrl}${article.thumbnail}`} alt="Blog Thumbnail" />
+                <img src={`${apiUrl}/static/blog/${article.thumbnail}`} alt="Blog Thumbnail" />
                 </div>
                 <div className="latest-news-items-center">
                   <div className="latest-news-center-left">
@@ -80,7 +78,7 @@ const LatestNews = () => {
                   </div>
                 </div>
                 <div className="latest-news-items-bottom">
-                    <h4><Link to="/">{article.title}</Link></h4>
+                    <h4><Link to={`/blog/${article.id}`}>{article.title}</Link></h4>
                     <div dangerouslySetInnerHTML={{__html: article.content.substring(0,130)}}></div>
                     <Link to={`/blog/${article.id}`}>Read More <img src="img/chevron-double-right.png" alt="Read More" /></Link>
 

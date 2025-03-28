@@ -14,44 +14,43 @@ const LatestNewsCard = () => {
   const [hasMore, setHasMore] = useState(true);
 
   const fetchBlogs = async (reset = false) => {
-    if (loading) return; // Prevent multiple calls
+    if (loading) return;
     setLoading(true);
 
     try {
       const response = await axios.get(`${apiUrl}/getBlog`, {
-        params: { skip: reset ? 0 : skip, take, category: selectedCategory !== 'all' ? selectedCategory : undefined },
+        params: {
+          skip: selectedCategory === 'all' ? (reset ? 0 : skip) : undefined,
+          take: selectedCategory === 'all' ? take : undefined,
+          category: selectedCategory !== 'all' ? selectedCategory : undefined
+        },
       });
 
       const newArticles = response.data;
 
       if (reset) {
         setArticles(newArticles);
-        setSkip(take);
-        setHasMore(newArticles.length === take);
+        setSkip(selectedCategory === 'all' ? newArticles.length : 0);
+        setHasMore(selectedCategory === 'all' && newArticles.length === take);
       } else {
         setArticles(prev => [...prev, ...newArticles]);
-        setSkip(prevSkip => prevSkip + take);
+        setSkip(prevSkip => prevSkip + newArticles.length);
         if (newArticles.length < take) setHasMore(false);
       }
 
-      // Extract unique categories
-      const uniqueCategories = [];
-      const categoryMap = {};
+      // Fetch categories only once (when the component mounts)
+      if (categories.length === 0) {
+        const categoryResponse = await axios.get(`${apiUrl}/category-api`); // Make sure you have an API to get all categories
+        setCategories(categoryResponse.data.data); // Assuming API response has categories in `data.data`
+      }
 
-      [...newArticles, ...articles].forEach(article => {
-        if (article.category && article.category.id && !categoryMap[article.category.id]) {
-          categoryMap[article.category.id] = true;
-          uniqueCategories.push(article.category);
-        }
-      });
-
-      setCategories(uniqueCategories);
     } catch (error) {
       console.error('Error fetching blogs:', error);
     } finally {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchBlogs(true); // Fetch blogs on first load
@@ -80,16 +79,20 @@ const LatestNewsCard = () => {
                 All
               </a>
             </li>
-            {categories.map(category => (
-              <li key={category.id}>
-                <a
-                  className={selectedCategory === category.slug ? 'active-1' : ''}
-                  onClick={() => setSelectedCategory(category.slug)}
-                >
-                  {category.categoryName}
-                </a>
-              </li>
-            ))}
+            {categories.length > 0 ? (
+              categories.map(category => (
+                <li key={category.id}>
+                  <a
+                    className={selectedCategory === category.slug ? 'active-1' : ''}
+                    onClick={() => setSelectedCategory(category.slug)}
+                  >
+                    {category.categoryName}
+                  </a>
+                </li>
+              ))
+            ) : (
+              <p>Loading categories...</p>
+            )}
           </ul>
         </div>
 
@@ -102,7 +105,7 @@ const LatestNewsCard = () => {
               <div key={article.id} className="articles-press-grid-item">
                 <div className="latest-news-items">
                   <div className="latest-news-items-img">
-                    <img src={`${apiUrl}${article.thumbnail}`} alt="Blog Thumbnail" />
+                    <img src={`${apiUrl}/static/blog/${article.thumbnail}`} alt="Blog Thumbnail" />
                   </div>
                   <div className="latest-news-items-center">
                     <div className="latest-news-center-left">
@@ -123,7 +126,7 @@ const LatestNewsCard = () => {
                   </div>
                   <div className="latest-news-items-bottom">
                     <h4><Link to="/">{article.title}</Link></h4>
-                    <div dangerouslySetInnerHTML={{__html: article.content.substring(0,130)}}></div>
+                    <div dangerouslySetInnerHTML={{ __html: article.content.substring(0, 130) }}></div>
                     <Link to={`/blog/${article.id}`}>Read More <img src="img/chevron-double-right.png" alt="Read More" /></Link>
                   </div>
                 </div>

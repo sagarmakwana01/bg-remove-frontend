@@ -44,7 +44,7 @@ const BlogContent = ({blog}) => {
               </div>
               <div className="blog-details-bottom">
                 <div className="blog-details-bottom-img">
-                  <img src={`${apiUrl}${blog.thumbnail}`} alt="blog" />
+                  <img src={`${apiUrl}/static/blog/${blog.thumbnail}`} alt="blog" />
                 </div>
                 <div className="blog-details-bottom-text">
                   <p dangerouslySetInnerHTML={{__html:blog.content}}></p>
@@ -72,7 +72,7 @@ const BlogContent = ({blog}) => {
                     articles.map((article, index)=>{
                       return  <div key={index} className="blog-details-latest-card-col">
                       <div className="blog-details-latest-card-left">
-                        <img src={`${apiUrl}${article.thumbnail}`} alt="blog" />
+                        <img src={`${apiUrl}/static/blog/${article.thumbnail}`} alt="blog" />
                       </div>
                       <div className="blog-details-latest-card-right">
                         <h3><Link to={`/blog/${article.id}`}>{article.title}</Link></h3>
